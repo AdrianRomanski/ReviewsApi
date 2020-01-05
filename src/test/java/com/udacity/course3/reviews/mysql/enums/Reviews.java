@@ -1,4 +1,9 @@
-package com.udacity.course3.reviews;
+package com.udacity.course3.reviews.mysql.enums;
+
+/** Enum class created for better readability while testing
+ * It supports creating 2 reviews - Negative and Positive
+ * Values can be access through getString method
+  **/
 
 public enum Reviews {
     POSITIVE_REVIEWER_NAME("Adrian"),

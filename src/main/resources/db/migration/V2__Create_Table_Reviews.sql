@@ -8,4 +8,4 @@ CREATE TABLE Reviews (
     primary key (reviewID),
     constraint review_product_fk
     foreign key(productID) references Products (productID)
-    )ENGINE=InnoDB DEFAULT CHARSET=utf8;
+    );

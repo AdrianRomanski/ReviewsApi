@@ -1,4 +1,4 @@
-package com.udacity.course3.reviews.entity;
+package com.udacity.course3.reviews.entity.mysql;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -8,6 +8,12 @@ import javax.validation.constraints.Min;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+
+/**
+ * JPA Entity related to Products Table in MySql Database
+ * Auto generating unique ID values for primary keys
+ * Connected to Reviews table with OneToMany relation(forward link('parent'))
+ */
 
 @Entity
 @Table(name = "Products")
@@ -41,12 +47,12 @@ public class Product {
     @Min(0)
     @Max(100)
     @Column(name = "guarantee")
-    private int guarantee;
+    private Integer guarantee;
 
     @Min(0)
     @Max(10)
     @Column(name = "rating")
-    private double rating;
+    private Double rating;
 
     @Column(name = "createdTime")
     private Timestamp createdTime;
@@ -107,31 +113,17 @@ public class Product {
         this.category = category;
     }
 
-    public Double getPrice() {
-        return price;
-    }
+    public Double getPrice() { return price; }
 
-    public void setPrice(Double price) {
-        this.price = price;
-    }
+    public void setPrice(Double price) { this.price = price; }
 
-    public int getGuarantee() {
-        return guarantee;
-    }
+    public Integer getGuarantee() { return guarantee; }
 
-    public void setGuarantee(int guarantee) {
-        this.guarantee = guarantee;
-    }
+    public void setGuarantee(Integer guarantee) { this.guarantee = guarantee; }
 
-    public double getRating() {
-        return rating;
-    }
+    public Double getRating() { return rating; }
 
-    public void setRating(double rating) {
-        this.rating = rating;
-    }
+    public void setRating(Double rating) { this.rating = rating; }
 
-    public void addReview(Review review) {
-        reviews.add(review);
-    }
+    public void addReview(Review review) { reviews.add(review); }
 }

@@ -1,11 +1,17 @@
-package com.udacity.course3.reviews;
+package com.udacity.course3.reviews.mysql;
 
-import com.udacity.course3.reviews.entity.Comment;
-import com.udacity.course3.reviews.entity.Product;
-import com.udacity.course3.reviews.entity.Review;
-import com.udacity.course3.reviews.repository.CommentRepository;
-import com.udacity.course3.reviews.repository.ProductRepository;
-import com.udacity.course3.reviews.repository.ReviewRepository;
+import com.udacity.course3.reviews.controller.CommentsController;
+import com.udacity.course3.reviews.controller.ProductsController;
+import com.udacity.course3.reviews.controller.ReviewsController;
+import com.udacity.course3.reviews.entity.mysql.Comment;
+import com.udacity.course3.reviews.entity.mysql.Product;
+import com.udacity.course3.reviews.entity.mysql.Review;
+import com.udacity.course3.reviews.mysql.enums.Comments;
+import com.udacity.course3.reviews.mysql.enums.ProductRazerMouse;
+import com.udacity.course3.reviews.mysql.enums.Reviews;
+import com.udacity.course3.reviews.repository.mysql.CommentRepository;
+import com.udacity.course3.reviews.repository.mysql.ProductRepository;
+import com.udacity.course3.reviews.repository.mysql.ReviewRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,24 +26,40 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+/**
+ * Testing MySql repositories and functionality of Controllers
+ * Repositories
+ * @see ProductRepository
+ * @see ReviewRepository
+ * @see CommentRepository
+ * Controllers
+ * @see ProductsController
+ * @see ReviewsController
+ * @see CommentsController
+ * Using enum classes for code redability
+ * @see ProductRazerMouse
+ * @see Comments
+ * @see Reviews
+ */
 @RunWith(SpringRunner.class)
 @DataJpaTest
 @TestPropertySource(properties = "spring.datasource.url=")
-public class ReviewsApplicationTests {
-
+public class MySqlTests {
 
 	@Autowired
 	private ProductRepository productRepository;
-
 	@Autowired
 	private ReviewRepository reviewRepository;
-
 	@Autowired
 	private CommentRepository commentRepository;
 
-	public ReviewsApplicationTests() {
+	public MySqlTests() {
 	}
 
+	/**
+	* Product data is coming for Enum Class for better readability
+	 * @see ProductRazerMouse
+	 */
 	public Product createProduct() {
 		Product product = new Product();
 		product.setCreatedTime(Timestamp.valueOf(LocalDateTime.now()));
@@ -51,6 +73,10 @@ public class ReviewsApplicationTests {
 		return product;
 	}
 
+	/**
+	 * Review data is coming for Enum Class for better readability
+	 * @see Reviews
+	 */
 	public Review createPositiveReview(Product product){
 		Review review = new Review();
 		review.setProduct(product);
@@ -64,6 +90,10 @@ public class ReviewsApplicationTests {
 		return review;
 	}
 
+	/**
+	 * Review data is coming for Enum Class for better readability
+	 * @see Reviews
+	 */
 	public Review createNegativeReview(Product product){
 		Review review = new Review();
 		review.setProduct(product);
@@ -77,6 +107,10 @@ public class ReviewsApplicationTests {
 		return review;
 	}
 
+	/**
+	 * Comment data is coming for Enum Class for better readability
+	 * @see Comments
+	 */
 	public Comment createCommentForPositiveReview(Product product, Review review) {
 		Comment comment = new Comment();
 		review.setProduct(product);
@@ -91,7 +125,10 @@ public class ReviewsApplicationTests {
 		reviewRepository.save(review);
 		return comment;
 	}
-
+	/**
+	 * Comment data is coming for Enum Class for better readability
+	 * @see Comments
+	 */
 	public Comment createCommentForNegativeReview(Product product, Review review) {
 		Comment comment = new Comment();
 		comment.setReview(review);
@@ -114,10 +151,13 @@ public class ReviewsApplicationTests {
 		assertThat(commentRepository).isNotNull();
 	}
 
+	/**
+	 * Testing createProduct method
+	 * @see ProductsController#createProduct(com.udacity.course3.reviews.entity.mysql.Product)
+	 */
 	@Test
 	public void addProduct() {
 		Product product = createProduct();
-
 		assertThat(product.getProductName()).isEqualTo(ProductRazerMouse.PRODUCT_NAME.getString());
 		assertThat(product.getCategory()).isEqualTo(ProductRazerMouse.CATEGORY.getString());
 		assertThat(product.getManufacturer()).isEqualTo(ProductRazerMouse.MANUFACTURER.getString());
@@ -125,7 +165,10 @@ public class ReviewsApplicationTests {
 		assertThat(product.getProductDescription()).isEqualTo(ProductRazerMouse.PRODUCT_DESCRIPTION.getString());
 		assertThat(product.getPrice()).isEqualTo(192.97);
 	}
-
+	/**
+	 * Testing createReviewForProduct method
+	 * @see ReviewsController#createReviewForProduct(com.udacity.course3.reviews.entity.mysql.Review, java.lang.Integer)
+	 */
 	@Test
 	public void addReviews() {
 		Product product = createProduct();
@@ -144,6 +187,10 @@ public class ReviewsApplicationTests {
 		assertThat(product.getReviews().size()).isEqualTo(2);
 	}
 
+	/**
+	 * Testing createCommentForReview method
+	 * @see CommentsController#createCommentForReview(com.udacity.course3.reviews.entity.mysql.Comment, java.lang.Integer)
+	 */
 	@Test
 	public void addComments() {
 		Product product = createProduct();
@@ -158,7 +205,10 @@ public class ReviewsApplicationTests {
 		assertThat(commentRepository.getOne(2).getName()).isEqualTo(Comments.NEGATIVE_COMMENT_NAME.getString());
 		assertThat(commentRepository.count()).isEqualTo(2);
 	}
-
+	/**
+	 * Testing listReviewsForProduct method (for MySql as it returns a list from MongoDB ATM)
+	 * @see ReviewsController#listReviewsForProduct(java.lang.Integer)
+	 */
 	@Test
 	public void getReviewsForProduct() {
 		Product product = createProduct();
@@ -173,6 +223,10 @@ public class ReviewsApplicationTests {
 		assertThat(reviews.get(1).getReviewDescription()).isEqualTo(Reviews.NEGATIVE_REVIEW_DESCRIPTION.getString());
 	}
 
+	/**
+	 * Testing listCommentsForReview method
+	 * @see CommentsController#listCommentsForReview(java.lang.Integer)
+	 */
 	@Test
 	public void getCommentsForReview() {
 		Product product = createProduct();
@@ -185,6 +239,10 @@ public class ReviewsApplicationTests {
 		assertThat(comments.get(0).getName()).isEqualTo(Comments.POSITIVE_COMMENT_NAME.getString());
 	}
 
+	/**
+	 * Testing deletingProduct method
+	 * @see ProductsController#deleteProduct(java.lang.Integer)
+	 */
 	@Test
 	public void deleteProduct() {
 		Product product = createProduct();
@@ -193,6 +251,10 @@ public class ReviewsApplicationTests {
 		assertThat(productRepository.findById(product.getProductID())).isEmpty();
 	}
 
+	/**
+	 * Testing findByID method
+	 * @see ProductsController#findById(java.lang.Integer)
+	 */
 	@Test
 	public void findProduct() {
 		Product product = createProduct();

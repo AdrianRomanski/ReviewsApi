@@ -1,11 +1,15 @@
-package com.udacity.course3.reviews.entity;
+package com.udacity.course3.reviews.entity.mysql;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
 
-
+/**
+ * JPA Entity related to Comments Table in MySql Database
+ * Auto generating unique ID values for primary keys
+ * Connected to Reviews table with ManyToOne relation(back link('children'))
+ */
 @Entity
 @Table(name = "Comments")
 public class Comment {

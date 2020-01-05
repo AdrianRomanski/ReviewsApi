@@ -8,4 +8,4 @@ CREATE TABLE Comments (
     primary key (commentID),
     constraint comment_review_fk
     foreign key(reviewID) references Reviews (reviewID)
-    )ENGINE=InnoDB DEFAULT CHARSET=utf8;
+    );

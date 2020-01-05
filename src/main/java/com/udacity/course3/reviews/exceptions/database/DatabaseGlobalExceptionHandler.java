@@ -9,6 +9,10 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * Basic Exception handler changing HttpStatus from 500 to 404 NOT FOUND(Avoid to crush API after errors)
+ * @see DatabaseEmptyException
+ */
 @ControllerAdvice
 public class DatabaseGlobalExceptionHandler extends ResponseEntityExceptionHandler {
 

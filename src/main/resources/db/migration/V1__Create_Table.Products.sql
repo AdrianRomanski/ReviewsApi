@@ -9,4 +9,4 @@ CREATE TABLE Products (
     rating int(2) DEFAULT NULL,
     createdTime timestamp NOT NULL,
     primary key (productID)
-)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+);
