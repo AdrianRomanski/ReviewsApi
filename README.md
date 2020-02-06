@@ -1,6 +1,8 @@
 # Reviews API 
+Allow user to create a product, review for a product and comment for review
 
 ## MySql
+#### Initiliazied with FlyWay
 ![ReviewsApi](https://user-images.githubusercontent.com/44946000/73933468-c991c500-48dc-11ea-8c2d-a95ed125747d.png)
 
 ## MySql && MongoDB
